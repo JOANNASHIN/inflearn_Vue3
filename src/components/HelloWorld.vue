@@ -1,41 +1,61 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <p>{{name}}</p>
+    <p>{{greeting("Joanna")}}</p>
+    
+    <p>id: {{test.id}}</p>
+
+    <button @click="updateRefReactive()">change!</button>
+
+
+<!-- 단방향 데이터바인딩 -->
+    <input v-bind:value="databinding">
+    <button v-on:click="updateData()">change data</button>
+
+<!-- 양방향 데이터 바인딩 -->
+    <input type="text" v-model="databinding">
+
+
+    <input v-model="databinding">
+    <p>현재 name은? {{databinding}}</p>
+
 </template>
 
 <script>
+import { ref, reactive } from "vue";
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+    name: 'App',
+
+    setup() {
+        const name = ref("kossie coder");
+        const test = reactive({
+            id: 1
+        })
+
+        const greeting = (name) => {
+            return `hello ${name}`
+        }
+
+        const updateRefReactive = () => {
+            name.value = "namechanged";
+            test.id = "2";
+        }
+
+        const databinding = ref("before");
+        const updateData = () => {
+            databinding.value = "after";
+
+        }
+
+        return {
+            name,
+            test,
+            greeting,
+            updateRefReactive,
+            databinding,
+            updateData
+        }
+    }
 }
 </script>
 
